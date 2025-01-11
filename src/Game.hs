@@ -1,6 +1,7 @@
 module Game (gameLoop) where
 import Grid (printGrid, Grid, updateGrid, isGridFilled)
 import Validator (isValidMove, isValidGrid)
+import Data.Char (isDigit)
 
 gameLoop :: Grid -> IO ()
 gameLoop grid = do
@@ -25,9 +26,14 @@ readMove = do
     then do
       putStrLn "Thanks for playing!"
       error "Game terminated by user"
-    else do
-      let [row, col, num] = map read (words input)
-      return (row - 1, col - 1, num)  -- Convert to 0-based indexing
+    else
+      case words input of
+        [rowStr, colStr, numStr]
+          | all isDigit rowStr && all isDigit colStr && all isDigit numStr ->
+              return (read rowStr - 1, read colStr - 1, read numStr - 1)
+        _ -> do
+          putStrLn "Invalid input format, please try"
+          readMove
 
 isGameComplete :: Grid -> Bool
 isGameComplete grid = isGridFilled grid && isValidGrid grid
