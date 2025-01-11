@@ -27,3 +27,6 @@ updateGrid grid row col num =
   take row grid ++
   [take col (grid !! row) ++ [num] ++ drop (col + 1) (grid !! row)] ++
   drop (row + 1) grid
+
+isGridFilled :: Grid -> Bool
+isGridFilled grid = all (all (/= 0)) grid
