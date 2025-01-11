@@ -1,4 +1,4 @@
-module Grid(printGrid, sampleGrid) where
+module Grid(Grid, printGrid, sampleGrid) where
 
 type Row = [Int]
 type Grid = [Row]
