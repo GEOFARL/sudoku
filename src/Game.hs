@@ -19,10 +19,15 @@ gameLoop grid = do
 
 readMove :: IO (Int, Int, Int)
 readMove = do
-  putStrLn "Enter your move (row column number):"
-  line <- getLine
-  let [row, col, num] = map read $ words line
-  return (row - 1, col - 1, num)
+  putStrLn "Enter your move (row column number) or 'q' to quit:"
+  input <- getLine
+  if input == "q"
+    then do
+      putStrLn "Thanks for playing!"
+      error "Game terminated by user"
+    else do
+      let [row, col, num] = map read (words input)
+      return (row - 1, col - 1, num)  -- Convert to 0-based indexing
 
 isGameComplete :: Grid -> Bool
 isGameComplete grid = isGridFilled grid && isValidGrid grid
