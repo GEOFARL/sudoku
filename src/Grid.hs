@@ -1,5 +1,7 @@
 module Grid(Grid, printGrid, sampleGrid, updateGrid, isGridFilled, almostSolvedGrid) where
 
+import Control.Monad (when)
+
 type Row = [Int]
 type Grid = [Row]
 
@@ -33,7 +35,29 @@ emptyGrid :: Grid
 emptyGrid = replicate 9 (replicate 9 0)
 
 printGrid :: Grid -> IO ()
-printGrid grid = mapM_ print grid
+printGrid grid = do
+  putStrLn horizontalSeparator
+  mapM_ printRow (zip grid [1..])
+  where
+    horizontalSeparator = "+-------+-------+-------+"
+
+    printRow (row, i) = do
+      putStrLn $ "| " ++ unwords (addVerticalSeparators (map showOrEmpty row)) ++ " |"
+      when (i `mod` 3 == 0) $ putStrLn horizontalSeparator
+
+    addVerticalSeparators :: [String] -> [String]
+    addVerticalSeparators row = 
+      let (block1, rest1) = splitAt 3 row
+          (block2, block3) = splitAt 3 rest1
+      in block1 ++ ["|"] ++ block2 ++ ["|"] ++ block3
+
+    showOrEmpty :: Int -> String
+    showOrEmpty 0 = "."
+    showOrEmpty n = show n
+
+chunksOf :: Int -> [a] -> [[a]]
+chunksOf _ [] = []
+chunksOf n xs = take n xs : chunksOf n (drop n xs)
 
 updateGrid :: Grid -> Int -> Int -> Int -> Grid
 updateGrid grid row col num =

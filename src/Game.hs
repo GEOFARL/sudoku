@@ -30,7 +30,7 @@ readMove = do
       case words input of
         [rowStr, colStr, numStr]
           | all isDigit rowStr && all isDigit colStr && all isDigit numStr ->
-              return (read rowStr - 1, read colStr - 1, read numStr - 1)
+              return (read rowStr - 1, read colStr - 1, read numStr)
         _ -> do
           putStrLn "Invalid input format, please try"
           readMove
