@@ -1,5 +1,6 @@
 module Main (main) where
+import Grid (printGrid, sampleGrid)
 
 main :: IO ()
 main = do
-  putStrLn "hello world"
+  printGrid sampleGrid
