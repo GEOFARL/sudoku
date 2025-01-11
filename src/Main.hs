@@ -1,7 +1,9 @@
-module Main (main) where
-import Grid (printGrid, sampleGrid, updateGrid)
-import Validator (isValidMove)
+module Main where
+
+import Grid (sampleGrid)
+import Game (gameLoop)
 
 main :: IO ()
 main = do
-  printGrid sampleGrid
+  putStrLn "Welcome to Sudoku!"
+  gameLoop sampleGrid
