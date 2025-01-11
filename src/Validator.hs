@@ -1,4 +1,4 @@
-module Validator(isValidMove) where
+module Validator(isValidMove, isValidGrid) where
 
 import Grid (Grid)
 import Data.List (nub, transpose)
